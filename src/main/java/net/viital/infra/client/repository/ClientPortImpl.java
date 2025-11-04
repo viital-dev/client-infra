@@ -4,16 +4,17 @@ import net.viital.core.client.boundary.port.ClientPort;
 
 import net.viital.infra.client.adapters.ClientAdapter;
 import net.viital.infra.client.entity.Client;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class ClientRepositoryImpl implements ClientPort {
+@Component
+public class ClientPortImpl implements ClientPort {
 
-  private ClientRepository clientRepository;
+  final private ClientRepository clientRepository;
 
-  public ClientRepositoryImpl(ClientRepository clientRepository) {
+  public ClientPortImpl(ClientRepository clientRepository) {
     this.clientRepository = clientRepository;
   }
 
@@ -31,7 +32,12 @@ public class ClientRepositoryImpl implements ClientPort {
   getClientByEmailOrId(String email, long docIdValue) {
 
     Optional<Client> optClient = clientRepository.
-        findClientByEmailOrderByIdDocValue(email, docIdValue);
+        findClientByEmailOrIdDocValue(email, docIdValue);
     return optClient.map(ClientAdapter::fromJPAEntityToEntityClient);
+  }
+
+  @Override
+  public List<net.viital.core.client.entity.Client> getClients() {
+    return clientRepository.findAll().stream().map(ClientAdapter::fromJPAEntityToEntityClient).toList();
   }
 }

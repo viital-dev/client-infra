@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, UUID> {
 
-  Optional<Client> findClientByEmailOrderByIdDocValue(String email, long docIdValue);
+  Optional<Client> findClientByEmailOrIdDocValue(String email, long docIdValue);
 
 }
