@@ -1,6 +1,6 @@
 package net.viital.infra.client.controller;
 
-import net.viital.core.client.entity.Client;
+import net.viital.core.client.entity.ClientEntity;
 import net.viital.core.client.usecase.CRUDClientUseCase;
 import net.viital.infra.client.adapters.ClientAdapter;
 import net.viital.infra.client.controller.dto.ClientDTO;
@@ -35,7 +35,7 @@ public class ClientController {
   @GetMapping("/client")
   public ResponseEntity getClients() {
     System.out.println("getting clients");
-    List<Client> clients = crudClientUseCase.getClients();
+    List<ClientEntity> clients = crudClientUseCase.getClients();
     if(clients.isEmpty()){
       System.out.println("no clients");
       return   ResponseEntity.notFound().build();
